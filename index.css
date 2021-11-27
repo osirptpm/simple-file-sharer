@@ -1,0 +1,134 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*
+color palette
+ad343e-474747-f2af29-000000-e0e0ce
+*/
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0ce;
+}
+
+body > section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+body > section > div {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 3px;
+    background-color: #000000;
+    color: #e0e0ce;
+    font-size: 300%;
+    cursor: default;
+}
+
+#portWrap {
+    align-self: flex-end;
+}
+
+span[for=port] {
+    padding: 7px;
+    /* background-color: #81c784; */
+    background-color: none;
+    color: #000000;
+    font-size: 70%;
+    cursor: default;
+}
+#port {
+    padding: 7px;
+    width: 70px;
+    text-align: center;
+    border: none;
+    background-color: #e0e0ce;
+    color: #000000;
+    font-size: 80%;
+    outline: none;
+}
+#port:hover {
+    background-color: rgba(224, 224, 206, 0.5);
+}
+#port:focus {
+    background-color: rgba(224, 224, 206, 0.5);
+}
+#port.error {
+    background-color: rgba(173, 52, 62, 0.5);
+}
+
+
+#openDialog {
+    padding: 10px;
+    margin: 10px;
+    background-color: #f2af29;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: all .1s;
+}
+
+#openDialog:hover {
+    background-color: #BF8A20;
+}
+
+#openDialog:active {
+    background-color: #8C6517;
+}
+
+
+#links > section[data-link] {
+    padding: 10px 15px;
+    margin: 10px;
+    position: relative;
+    background-color: rgba(0, 0, 0, .05);
+    cursor: pointer;
+    text-align: center;
+
+    transition: all .2s;
+}
+#links > section[data-link]:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+#links > section[data-link]:active {
+    background-color: rgba(0, 0, 0, .15);
+}
+#links .deleteBtn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    cursor: pointer;
+
+    transition: all .2s;
+}
+#links .deleteBtn:hover {
+    color: #ad343e;
+}
+
+input[disabled] {
+    display: none;
+}

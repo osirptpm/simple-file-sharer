@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Share Link</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./material-icons.css">
+</head>
+
+<body>
+    <section>
+        <div>
+            <h1>SHARE LINK</h1>
+            <section id="portWrap">
+                <span for="port">SERVER PORT:</span><input id="port" name="port" type="number" min="0" max="65535"/>
+            </section>
+            <button id="openDialog">CREATE DOWNLOAD LINK</button>
+            <input type="text" disabled />
+        </div>
+        <section id="links">
+        </section>
+    </section>
+    <script src="./renderer.js"></script>
+</body>
+
+</html>
