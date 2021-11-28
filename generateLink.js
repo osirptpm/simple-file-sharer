@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require('uuid')
 const server = require('./server')
 
 const contents = new Map()
+let _cb = () => {}
 
 module.exports.selectFiles = () => {
     return dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
@@ -35,6 +36,9 @@ module.exports.getContents = () => {
 module.exports.getFilePath = contentId => {
     return contents.get(contentId)
 }
+module.exports.onChange = cb => {
+    typeof cb === 'function' && (_cb = cb)
+}
 
 function generateContentId() {
     return uuidv4()
@@ -42,11 +46,13 @@ function generateContentId() {
 
 function addContent(contentId, filePath) {
     contents.set(contentId, filePath)
+    module.exports.getContents().then(_cb)
     return contentId
 }
 
 function deleteContent(contentId) {
     contents.delete(contentId)
+    module.exports.getContents().then(_cb)
 }
 
 async function getHostIPs() {

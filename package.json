@@ -5,10 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx babel --config-file ./babel.config.json --watch ./web/src --out-dir ./web/ --presets @babel/preset-react",
     "package": "electron-forge package",
-    "make": "electron-forge make",
-    "build": "npx electron-builder build"
+    "make": "electron-forge make"
   },
   "keywords": [
     "file",
@@ -26,44 +25,16 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
     "@electron-forge/cli": "^6.0.0-beta.61",
     "@electron-forge/maker-deb": "^6.0.0-beta.61",
     "@electron-forge/maker-rpm": "^6.0.0-beta.61",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
     "@electron-forge/maker-zip": "^6.0.0-beta.61",
-    "electron": "^15.3.1",
-    "electron-builder": "^22.13.1"
+    "electron": "^15.3.1"
   },
   "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "simple-file-sharer"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
-  },
-  "build": {
-    "win": {
-      "target": "portable"
-    }
+    "forge": "./forge.config.js"
   }
 }

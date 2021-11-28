@@ -15,7 +15,7 @@ color palette
 ad343e-474747-f2af29-000000-e0e0ce
 */
 
-body {
+article {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -23,14 +23,14 @@ body {
     background-color: #e0e0ce;
 }
 
-body > section {
+article {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-body > section > div {
+article > div {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -80,7 +80,7 @@ span[for=port] {
 }
 
 
-#openDialog {
+#generateBtn {
     padding: 10px;
     margin: 10px;
     background-color: #f2af29;
@@ -92,16 +92,16 @@ span[for=port] {
     transition: all .1s;
 }
 
-#openDialog:hover {
+#generateBtn:hover {
     background-color: #BF8A20;
 }
 
-#openDialog:active {
+#generateBtn:active {
     background-color: #8C6517;
 }
 
 
-#links > section[data-link] {
+#links > section {
     padding: 10px 15px;
     margin: 10px;
     position: relative;
@@ -111,10 +111,10 @@ span[for=port] {
 
     transition: all .2s;
 }
-#links > section[data-link]:hover {
+#links > section:hover {
     background-color: rgba(0, 0, 0, .1);
 }
-#links > section[data-link]:active {
+#links > section:active {
     background-color: rgba(0, 0, 0, .15);
 }
 #links .deleteBtn {
@@ -127,8 +127,4 @@ span[for=port] {
 }
 #links .deleteBtn:hover {
     color: #ad343e;
-}
-
-input[disabled] {
-    display: none;
 }

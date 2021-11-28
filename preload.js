@@ -7,19 +7,19 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 contextBridge.exposeInMainWorld('electron', {
-    openDialog: () => {
-        ipcRenderer.send('onOpenDialog')
-    },
-    changePort: port => {
-        ipcRenderer.send('onChangePort', port)
-    },
-    deleteLink: contentId => {
-        ipcRenderer.send('onDeleteLink', contentId)
-    }
+    generateLinks: () => ipcRenderer.send('generateLinks'),
+    getLinks: () => ipcRenderer.invoke('getLinks'),
+    deleteLink: contentId => ipcRenderer.send('deleteLink', contentId),
+    changePort: port => ipcRenderer.send('onChangePort', port)
 })
 
-ipcRenderer.on('addLinks', (event, links) => {
-    createLinkElement(links)
+ipcRenderer.on('links', (event, links) => {
+    // createLinkElement(links)
+    window.postMessage({
+        type: 'event',
+        name: 'links',
+        data: links
+    }, '*')
 })
 ipcRenderer.on('onPort', (event, port) => {
     onPortHandler(port) 
@@ -27,49 +27,6 @@ ipcRenderer.on('onPort', (event, port) => {
 ipcRenderer.on('onPortError', (event, errorMessage, currentPort) => {
     onPortErrorHandler(errorMessage, currentPort) 
 })
-
-function createLinkElement(links) {
-    const linksEl = document.querySelector('#links')
-    linksEl.innerHTML = ''
-    const inputEl = document.querySelector('input[disabled]')
-    links.forEach(link => {
-        link.links.forEach(_link => {
-            const linkEl = document.createElement('section')
-            linkEl.dataset.link = _link
-
-            const pEl = document.createElement('p')
-            pEl.textContent = link.filename
-
-            const deleteEl = document.createElement('div')
-            deleteEl.className = 'deleteBtn'
-            deleteEl.dataset.contentId = link.contentId
-            deleteEl.innerHTML = '<span class="material-icons">cancel</span>'
-
-            let timer
-            linkEl.addEventListener('click', event => {
-                inputEl.value = linkEl.dataset.link
-                inputEl.select()
-                inputEl.setSelectionRange(0, 99999)
-                navigator.clipboard.writeText(inputEl.value)
-                pEl.textContent = 'LINK COPIED!'
-                timer && clearTimeout(timer)
-                timer = setTimeout(() => {
-                    pEl.textContent = link.filename
-                }, 500)
-            })
-            deleteEl.addEventListener('click', event => {
-                event.preventDefault()
-                event.stopPropagation()
-                clearTimeout(timer)
-                ipcRenderer.send('onDeleteLink', deleteEl.dataset.contentId)
-                linkEl.remove()
-            })
-            linkEl.appendChild(pEl)
-            linkEl.appendChild(deleteEl)
-            linksEl.appendChild(linkEl)
-        })
-    })
-}
 
 function onPortHandler(port) {
     document.querySelector('#port').value = port

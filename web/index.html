@@ -12,9 +12,12 @@
 </head>
 
 <body>
-    <section>
+    <article id="root">
+
+    </article>
+    <!-- <section>
         <div>
-            <h1>SHARE LINK</h1>
+            <h1>SIMPLE FILE SHARER</h1>
             <section id="portWrap">
                 <span for="port">SERVER PORT:</span><input id="port" name="port" type="number" min="0" max="65535"/>
             </section>
@@ -23,8 +26,10 @@
         </div>
         <section id="links">
         </section>
-    </section>
-    <script src="./renderer.js"></script>
+    </section> -->
+    <script src="./libs/react.production.min.js" crossorigin></script>
+    <script src="./libs/react-dom.production.min.js" crossorigin></script>
+    <script src="./index.js" type="module"></script>
 </body>
 
 </html>

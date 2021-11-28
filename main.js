@@ -8,6 +8,8 @@ const server = require('./server'),
     generateLink = require('./generateLink'),
     CODE = require('./code')
 
+if(require('electron-squirrel-startup')) app.quit()
+
 app.on('window-all-closed', async () => {
     await server.close().catch(error => { })
     if (process.platform !== 'darwin') app.quit()
@@ -22,29 +24,33 @@ app.whenReady()
             if (BrowserWindow.getAllWindows().length === 0) createWindow()
         })
 
-        ipcMain.on('onOpenDialog', async (event) => {
+        generateLink.onChange(links => {
+            win.webContents.send('links', links)
+        })
+
+        ipcMain.on('generateLinks', async (event) => {
             const { filePaths } = await generateLink.selectFiles()
             // const links = await generateLink.generateLinks(filePaths)
             await generateLink.generateLinks(filePaths)
-            // win.webContents.send('addLinks', links)
-            generateLink.getContents().then(content => win.webContents.send('addLinks', content))
+            // win.webContents.send('links', links)
+            // return await generateLink.getContents()
         })
         ipcMain.on('onChangePort', async (event, port) => {
             try {
                 await server.close()
                 await server.listen(port)
                 win.webContents.send('onPort', server.port)
-                generateLink.getContents().then(content => win.webContents.send('addLinks', content))
+                generateLink.getContents().then(content => win.webContents.send('links', content))
             } catch (error) {
                 serverErrorHandler(error, win)
             }
         })
-        ipcMain.on('onDeleteLink', async (event, contentId) => {
+        ipcMain.on('deleteLink', async (event, contentId) => {
             generateLink.destroyLink(contentId)
         })
         win.webContents.on('dom-ready', event => {
-            win.webContents.send('onPort', port)
-            generateLink.getContents().then(content => win.webContents.send('addLinks', content))
+            win.webContents.send('onPort', server.port)
+            generateLink.getContents().then(content => win.webContents.send('links', content))
         })
     })
 
@@ -63,11 +69,12 @@ function createWindow() {
             color: '#e0e0ce',
             symbolColor: '#000000'
         },
+        icon: path.join(__dirname, 'assets', 'images', 'icons', 'link.ico')
     })
     win.once('ready-to-show', () => {
         win.show()
     })
-    win.loadFile('index.html')
+    win.loadFile('web/index.html')
     return win
 }
 
