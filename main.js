@@ -30,10 +30,7 @@ app.whenReady()
 
         ipcMain.on('generateLinks', async (event) => {
             const { filePaths } = await generateLink.selectFiles()
-            // const links = await generateLink.generateLinks(filePaths)
             await generateLink.generateLinks(filePaths)
-            // win.webContents.send('links', links)
-            // return await generateLink.getContents()
         })
         ipcMain.on('onChangePort', async (event, port) => {
             try {

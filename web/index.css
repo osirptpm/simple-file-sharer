@@ -4,6 +4,15 @@
     box-sizing: border-box;
     user-select: none;
 }
+#titlebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0ce;
+    -webkit-app-region: drag;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
